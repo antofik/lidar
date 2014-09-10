@@ -4,7 +4,7 @@
 #include <qmath.h>
 #include <mocklidar.h>
 #include <QTimer>
-#include "lidarreader.h"
+#include "lidar.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
