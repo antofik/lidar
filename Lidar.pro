@@ -25,6 +25,7 @@ unix{
     HEADERS += smc-wrapper/smc.h
     LIBS += /home/ubuntu/c_enviroment/*.so
     INCLUDEPATH += /usr/include/
+    INCLUDEPATH += smc-wrapper
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino/cores
