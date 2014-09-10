@@ -9,11 +9,16 @@
 #include <iostream>
 #include <fstream>
 
-class LidarReader : public QObject
+#ifdef Q_OS_LINUX
+#include "smc.h"
+#endif
+
+
+class Lidar : public QObject
 {
     Q_OBJECT
 public:
-    explicit LidarReader(QObject *parent = 0);
+    explicit Lidar(QObject *parent = 0);
     int distance[360];
 
 signals:
@@ -32,6 +37,9 @@ private:
     bool from_file;
     FILE* file;
     int checksum(int data[]);
+#ifdef Q_OS_LINUX
+    SMC *LidarMotor;
+#endif
 
 };
 

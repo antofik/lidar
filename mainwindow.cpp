@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     center->setStyleSheet("background:green;border-radius:5px");
     center->setGeometry(x0, y0, size, size);
 
-    LidarReader *reader = new LidarReader();
+    Lidar *reader = new Lidar();
     MockLidar *lidar = new MockLidar();
     connect(reader, SIGNAL(data(int,int, int,int, int, int)), lidar, SLOT(data(int,int,int,int,int,int)));
     connect(lidar, SIGNAL(point(int,int)), this, SLOT(point(int,int)));
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
      *  User start_from_file() to read data from binary file
      *
      ***/
-    QTimer::singleShot(0, reader, SLOT(start_from_serial()));
+    QTimer::singleShot(0, reader, SLOT(start_from_file()));
 
 }
 

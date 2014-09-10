@@ -1,34 +1,41 @@
-#include "lidarreader.h"
+#include "lidar.h"
 #include "datafilereader.h"
 #include "serialreader.h"
 
-LidarReader::LidarReader(QObject *parent) : QObject(parent)
+Lidar::Lidar(QObject *parent) : QObject(parent)
 {
     static QThread thread;
     moveToThread(&thread);
     thread.start();
 }
 
-void LidarReader::start_from_serial()
+void Lidar::start_from_serial()
 {
+    #ifdef Q_OS_LINUX
+    const char * device = "/dev/ttyACM4";
+    LidarMotor = new SMC(device);
+    LidarMotor->smcExitSafeStart();
+    LidarMotor->smcSetTargetSpeed(1200); //TODO control motor
+    #endif
+
     serialreader *reader = new serialreader();
     connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
     QTimer::singleShot(0, reader, SIGNAL(start()));
 }
 
-void LidarReader::start_from_file()
+void Lidar::start_from_file()
 {
     datafilereader *reader = new datafilereader();
     connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
     QTimer::singleShot(0, reader, SIGNAL(start()));
 }
 
-void LidarReader::stop()
+void Lidar::stop()
 {
-
+    // TODO: stop
 }
 
-int LidarReader::checksum(int data[])
+int Lidar::checksum(int data[])
 {
     uint value = 0;
     for(int i=0;i<10;i++) {
@@ -41,7 +48,7 @@ int LidarReader::checksum(int data[])
     return (int)value;
 }
 
-void LidarReader::read(int index, int value)
+void Lidar::read(int index, int value)
 {
     const int length = 22;
     const int marker = 0xFA;

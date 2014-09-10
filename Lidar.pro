@@ -8,21 +8,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
         mocklidar.cpp \
-        lidarreader.cpp \
         datafilereader.cpp \
-        serialreader.cpp
+        serialreader.cpp \
+        lidar.cpp
 
 HEADERS  += mainwindow.h \
         mocklidar.h \
-        lidarreader.h \
         datafilereader.h \
-        serialreader.h
+        serialreader.h \
+        lidar.h
 
 FORMS    += mainwindow.ui
 
 unix{
-    SOURCES += ../smc-wrapper/smc.cpp
-    HEADERS += ../smc-wrapper/smc.h
+    SOURCES += smc-wrapper/smc.cpp
+    HEADERS += smc-wrapper/smc.h
     LIBS += /home/ubuntu/c_enviroment/*.so
     INCLUDEPATH += /usr/include/
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware
@@ -35,4 +35,11 @@ unix{
     INCLUDEPATH += /home/ubuntu/c_enviroment/libraries/SPI
     INCLUDEPATH += /home/ubuntu/c_enviroment/ibraries/Wire
     INCLUDEPATH += /home/ubuntu/c_enviroment/libraries/PN532_SPI
+}
+
+win32 {
+    SOURCES += smc-wrapper/smc.cpp
+    HEADERS += smc-wrapper/smc.h
+    INCLUDEPATH += smc-wrapper
+
 }
