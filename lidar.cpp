@@ -11,12 +11,12 @@ Lidar::Lidar(QObject *parent) : QObject(parent)
 
 void Lidar::start_from_serial()
 {
-    #ifdef Q_OS_LINUX
+#ifdef Q_OS_LINUX
     const char * device = "/dev/ttyACM4";
     LidarMotor = new SMC(device);
     LidarMotor->smcExitSafeStart();
     LidarMotor->smcSetTargetSpeed(1200); //TODO control motor
-    #endif
+#endif
 
     serialreader *reader = new serialreader();
     connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
@@ -72,6 +72,9 @@ void Lidar::read(int index, int value)
 
             int chk1 = (packet[21]  << 8) + packet[20];
             int chk2 = checksum(packet);
+
+            std::cout << "speed:" << speed/60 << std::endl;
+            std::cout.flush();
 
             if (chk1==chk2)
                 emit data(speed, angle, d1, d2, d3, d4);

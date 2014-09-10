@@ -38,8 +38,5 @@ unix{
 }
 
 win32 {
-    SOURCES += smc-wrapper/smc.cpp
-    HEADERS += smc-wrapper/smc.h
-    INCLUDEPATH += smc-wrapper
 
 }
