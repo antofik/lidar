@@ -24,14 +24,14 @@ private slots:
     void move();
 
 private:
-    int width = 250;
-    int height = 250;
-    qreal x = 50;
-    qreal y = 50;
-    int angle = 90;
-    bool moving = true;
-    qreal velocity = 100;
-    qreal moveDelta = 0.05;
+    int width;
+    int height;
+    qreal x;
+    qreal y;
+    int angle;
+    bool moving;
+    qreal velocity;
+    qreal moveDelta;
 };
 
 #endif // MOCKLIDAR_H

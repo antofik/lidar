@@ -5,6 +5,14 @@
 MockLidar::MockLidar(QObject *parent) :
     QObject(parent)
 {
+    width = 250;
+    height = 250;
+    x = 50;
+    y = 50;
+    angle = 90;
+    moving = true;
+    velocity = 100;
+    moveDelta = 0.05;
 }
 
 void MockLidar::start()
