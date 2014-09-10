@@ -4,6 +4,7 @@
 #include <QtCore>
 #include <iostream>
 #include <fstream>
+#include <QMessageBox>
 
 datafilereader::datafilereader(QObject *parent) :
     QObject(parent)
@@ -15,7 +16,7 @@ datafilereader::datafilereader(QObject *parent) :
 
 void datafilereader::start()
 {
-    std::ifstream file("F:/Programming/Robotics/data1", std::ios::binary|std::ios::ate);
+    std::ifstream file("data1", std::ios::binary|std::ios::ate);
     if (file.is_open())
     {
         std::streampos size;
@@ -35,5 +36,8 @@ void datafilereader::start()
             while( QTime::currentTime() < dieTime )
                 QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
+    } else {
+        std::cout << "\n\n\nBinary file not found!\nChange path in file <datafilereader.cpp>\n";
+        std::cout.flush();
     }
 }

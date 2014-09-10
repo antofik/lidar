@@ -18,14 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
     int radius = 200;
     qreal k = 3.1415926535/180;
 
-    QLabel *center = new QLabel(ui->frame);
-    center->setStyleSheet("background:green;border-radius:5px");
-    center->setGeometry(x0, y0, size, size);
-
     for(int i=0;i<360;i++) {
-        map[i] = 0;
+        map[i] = 999999;
         QLabel *l = new QLabel(ui->frame);
-        l->setText(".");
+        //l->setText(".");
         l->setStyleSheet("background:gray;border-radius:5px");
         int x = x0 + radius * qCos(i * k);
         int y = y0 + radius * qSin(i * k);
@@ -33,15 +29,26 @@ MainWindow::MainWindow(QWidget *parent) :
         points[i] = l;
     }
 
-    LidarReader *reader = new LidarReader();
+    QLabel *center = new QLabel(ui->frame);
+    center->setStyleSheet("background:green;border-radius:5px");
+    center->setGeometry(x0, y0, size, size);
 
+    LidarReader *reader = new LidarReader();
     MockLidar *lidar = new MockLidar();
     connect(reader, SIGNAL(data(int,int, int,int, int, int)), lidar, SLOT(data(int,int,int,int,int,int)));
     connect(lidar, SIGNAL(point(int,int)), this, SLOT(point(int,int)));
-    QTimer::singleShot(0, lidar, SLOT(start()));
-    QTimer::singleShot(0, reader, SLOT(start_from_file()));
-
+    QTimer::singleShot(0, lidar, SLOT(start()));    
     QTimer::singleShot(0, this, SLOT(display()));
+
+
+    /***
+     *
+     *  Use start_from_serial() to read data from serial port (lidar)
+     *  User start_from_file() to read data from binary file
+     *
+     ***/
+    QTimer::singleShot(0, reader, SLOT(start_from_serial()));
+
 }
 
 MainWindow::~MainWindow()

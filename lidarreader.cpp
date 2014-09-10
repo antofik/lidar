@@ -1,5 +1,6 @@
 #include "lidarreader.h"
 #include "datafilereader.h"
+#include "serialreader.h"
 
 LidarReader::LidarReader(QObject *parent) : QObject(parent)
 {
@@ -8,10 +9,11 @@ LidarReader::LidarReader(QObject *parent) : QObject(parent)
     thread.start();
 }
 
-void LidarReader::start()
+void LidarReader::start_from_serial()
 {
-    from_file = false;
-    // TODO: read from serial
+    serialreader *reader = new serialreader();
+    connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
+    QTimer::singleShot(0, reader, SIGNAL(start()));
 }
 
 void LidarReader::start_from_file()
@@ -19,49 +21,12 @@ void LidarReader::start_from_file()
     datafilereader *reader = new datafilereader();
     connect(reader, SIGNAL(read(int,int)), this, SLOT(read(int,int)));
     QTimer::singleShot(0, reader, SIGNAL(start()));
-
-  /*  from_file = true;
-
-    std::ifstream file("F:/Programming/Robotics/data1", std::ios::binary|std::ios::ate);
-    if (file.is_open())
-    {
-        std::streampos size;
-        char* memblock;
-
-        size = file.tellg();
-        memblock = new char[size];
-        file.seekg (0, std::ios::beg);
-        file.read (memblock, size);
-        file.close();
-
-        for(int i=0;i<size;i+=4) {
-            std::cout << memblock[i];
-        }
-      }*/
 }
 
 void LidarReader::stop()
 {
 
 }
-
-/*
-def checksum(data):
-    """Compute and return the checksum as an int."""
-    # group the data by word, little-endian
-    data_list = []
-    for t in range(10):
-        data_list.append( data[2*t] + (data[2*t+1]<<8) )
-
-    # compute the checksum on 32 bits
-    chk32 = 0
-    for d in data_list:
-        chk32 = (chk32 << 1) + d
-
-    # return a value wrapped around on 15bits, and truncated to still fit into 15 bits
-    checksum = (chk32 & 0x7FFF) + ( chk32 >> 15 ) # wrap around to fit into 15 bits
-    checksum = checksum & 0x7FFF # truncate to 15 bits
-    return int( checksum */
 
 int LidarReader::checksum(int data[])
 {

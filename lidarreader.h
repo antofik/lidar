@@ -20,7 +20,7 @@ signals:
     void data(int,int,int,int,int,int);
 
 public slots:
-    void start();
+    void start_from_serial();
     void start_from_file();
     void stop();
 
