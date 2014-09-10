@@ -12,6 +12,7 @@ SOURCES += main.cpp\
         serialreader.cpp \
         lidar.cpp
 
+
 HEADERS  += mainwindow.h \
         mocklidar.h \
         datafilereader.h \
@@ -29,7 +30,7 @@ unix{
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino/cores
-    INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino/cores/arduino
+    INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino/cores/arduino                   
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino/variants
     INCLUDEPATH += /home/ubuntu/c_enviroment/hardware/arduino/variants/sunxi
     INCLUDEPATH += /home/ubuntu/c_enviroment/libraries

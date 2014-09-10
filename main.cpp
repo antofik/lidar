@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include <QApplication>
 
+#ifdef Q_OS_LINUX
+#include "Arduino.h"
+#endif
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -10,6 +14,6 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-void loop() {
-    //DO NOT USE!
-}
+void setup(){}
+
+void loop(){}

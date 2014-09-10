@@ -6,7 +6,7 @@
 #include <QThread>
 
 #ifdef Q_OS_LINUX
-#include <Arduino.h>
+#include "Arduino.h"
 #endif
 
 serialreader::serialreader(QObject *parent) :
