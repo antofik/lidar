@@ -16,7 +16,7 @@ datafilereader::datafilereader(QObject *parent) :
 
 void datafilereader::start()
 {
-    std::ifstream file("data1", std::ios::binary|std::ios::ate);
+    std::ifstream file("/home/ubuntu/temp/lidar/data1", std::ios::binary|std::ios::ate);
     if (file.is_open())
     {
         std::streampos size;

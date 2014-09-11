@@ -21,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     for(int i=0;i<360;i++) {
         map[i] = 999999;
         QLabel *l = new QLabel(ui->frame);
-        //l->setText(".");
-        l->setStyleSheet("background:gray;border-radius:5px");
+        l->setText(".");
+        //l->setStyleSheet("background:gray;border-radius:5px");
         int x = x0 + radius * qCos(i * k);
         int y = y0 + radius * qSin(i * k);
         l->setGeometry(x, y, size, size);
@@ -47,7 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
      *  User start_from_file() to read data from binary file
      *
      ***/
-    QTimer::singleShot(0, reader, SLOT(start_from_file()));
+    //QTimer::singleShot(0, reader, SLOT(start_from_file()));
+    QTimer::singleShot(0, reader, SLOT(start_from_serial()));
 
 }
 
@@ -58,7 +59,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::point(int angle, int distance)
 {
-    map[angle] = distance;
+    map[angle] = distance/2;
 }
 
 void MainWindow::display()

@@ -15,7 +15,7 @@ void Lidar::start_from_serial()
     const char * device = "/dev/ttyACM4";
     LidarMotor = new SMC(device);
     LidarMotor->smcExitSafeStart();
-    LidarMotor->smcSetTargetSpeed(1200); //TODO control motor
+    LidarMotor->smcSetTargetSpeed(820); //TODO control motor
 #endif
 
     serialreader *reader = new serialreader();
@@ -60,16 +60,16 @@ void Lidar::read(int index, int value)
         if (pointer == length) {
             int angle = (packet[1] - 0xA0) << 2;
             int speed = (packet[3] << 8) + packet[2];
-            /*int d1 = packet[5] & 0x80 == 0 ? packet[4] : -1;
+            int d1 = packet[5] & 0x80 == 0 ? packet[4] : -1;
             int d2 = packet[9] & 0x80 == 0 ? packet[8] : -1;
             int d3 = packet[13] & 0x80 == 0 ? packet[12] : -1;
             int d4 = packet[17] & 0x80 == 0 ? packet[16] : -1;
-            */
+            /*
             int d1 = packet[4];
             int d2 = packet[8];
             int d3 = packet[12];
             int d4 = packet[16];
-
+*/
             int chk1 = (packet[21]  << 8) + packet[20];
             int chk2 = checksum(packet);
 
