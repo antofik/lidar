@@ -33,13 +33,14 @@ void serialreader::start()
         if (Serial.available() > 0)
         {
             int value = Serial.read();
-            unsigned char ch = value;
 
+            /*unsigned char ch = value;
             FILE* fh;
             fh = fopen("data.bin","ab+");
             fwrite(&ch, sizeof(ch),1,fh);
-            fclose(fh);
+            fclose(fh);*/
             //std::cout << "~" << value << std::endl;
+
             emit read(-1, value);
         }
         serialEventRun();

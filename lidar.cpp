@@ -60,16 +60,23 @@ void Lidar::read(int index, int value)
         if (pointer == length) {
             int angle = (packet[1] - 0xA0) << 2;
             int speed = (packet[3] << 8) + packet[2];
-            int d1 = packet[5] & 0x80 == 0 ? packet[4] : -1;
+            /*int d1 = packet[5] & 0x80 == 0 ? packet[4] : -1;
             int d2 = packet[9] & 0x80 == 0 ? packet[8] : -1;
             int d3 = packet[13] & 0x80 == 0 ? packet[12] : -1;
             int d4 = packet[17] & 0x80 == 0 ? packet[16] : -1;
-            /*
-            int d1 = packet[4];
-            int d2 = packet[8];
-            int d3 = packet[12];
-            int d4 = packet[16];
-*/
+            */
+            const int mask = 0x1f;
+            unsigned int d1 = packet[4] + ((packet[5] & mask) << 8);
+            unsigned int d2 = packet[8] + ((packet[9] & mask) << 8);
+            unsigned int d3 = packet[12] + ((packet[13] & mask) << 8);
+            unsigned int d4 = packet[16] + ((packet[17] & mask) << 8);
+
+            const unsigned int errorMask = 0xC0;
+            if ((packet[5] & errorMask) != 0) d1 = -1;
+            if ((packet[9] & errorMask) != 0) d2 = -1;
+            if ((packet[13] & errorMask) != 0) d3 = -1;
+            if ((packet[17] & errorMask) != 0) d4 = -1;
+
             int chk1 = (packet[21]  << 8) + packet[20];
             int chk2 = checksum(packet);
 

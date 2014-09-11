@@ -59,7 +59,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::point(int angle, int distance)
 {
-    map[angle] = distance/2;
+    map[angle] = distance/4;
 }
 
 void MainWindow::display()
